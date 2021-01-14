@@ -3,6 +3,32 @@ class SudokuSolver {
   validate(puzzleString) {
   }
 
+  const board = function convertToBoard(puzzleString){
+    var board = []
+    puzzleArr = puzzleString.split("");
+    puzzleArr.forEach(num => {
+      if(num === "."){
+        return num = 0;
+      } 
+      return parseInt(num)
+    })
+    while(puzzleArr[0]) {
+      board.push(puzzleArr.splice(0, 9));
+    }
+    return board;
+  }
+
+  nextEmptySpot(board){
+    for (let i=0; i<9; i++){
+      for (let j=0; j<9; j++){
+        if (board[i][j] === 0) {
+          return [i, j];
+        }
+      }
+    }
+    return [-1, -1];
+  }
+
   checkRowPlacement(puzzleString, row, column, value) {
 
   }
@@ -16,22 +42,6 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-    /*
-    1. If there is no empty cell in the matrix M:
-    return true
-    2. Let (i, j) be an empty cell in the matrix M
-    3. For i from 1 to 9:
-        3.1. If i is not present in the row r, in column c, and the 3x3
-        submatrix of (r, c):
-            a) M(r, c) = i 
-            b) recursively try fill in remaining empty cells
-            c) If recursion was successful:
-                return true
-            d) M(r, c) = 0
-    4. return false
-    */
-  
-    return puzzleString;
   }
 }
 
