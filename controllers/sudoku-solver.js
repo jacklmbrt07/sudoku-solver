@@ -3,19 +3,20 @@ class SudokuSolver {
   validate(puzzleString) {
   }
 
-  const board = function convertToBoard(puzzleString){
-    var board = []
-    puzzleArr = puzzleString.split("");
-    puzzleArr.forEach(num => {
-      if(num === "."){
-        return num = 0;
-      } 
-      return parseInt(num)
-    })
-    while(puzzleArr[0]) {
-      board.push(puzzleArr.splice(0, 9));
+  convertToGrid(puzzleString){
+    var grid = []
+    let puzzleArr = puzzleString.split("");
+    for(let i = 0; i < puzzleArr.length; i++) {
+      puzzleArr[i] == "." ? puzzleArr[i] = 0 : puzzleArr[i] = parseInt(puzzleArr[i])
     }
-    return board;
+    while(puzzleArr.length) {
+      grid.push(puzzleArr.splice(0, 9));
+    }
+    return grid;
+  }
+
+  convertToString(grid){
+    return grid.flat().join("");
   }
 
   nextEmptySpot(board){
@@ -43,7 +44,7 @@ class SudokuSolver {
 
   solveSudoku(grid, row, col){
     const n = 9
-    if (row == n - 1 && col == n) return true;
+    if (row == n - 1 && col == n) return grid;
 
     if (col == n) {
       row++;
@@ -55,7 +56,7 @@ class SudokuSolver {
     for (let num = 1; num <10; num++) {
       if (this.isSafe(grid, row, col, num)) {
         grid[row][col] = num;
-        if(this.solveSudoku(grid, row, col + 1)) return true;
+        if(this.solveSudoku(grid, row, col + 1)) return grid;
       }
       grid[row][col] = 0 ;
     }
@@ -84,12 +85,19 @@ class SudokuSolver {
           return false;
         }
       }
-      \
     }
+    return true;
   }
 
 
   solve(puzzleString) {
+    let grid = this.convertToGrid(puzzleString);
+    let solvedSudoku = this.solveSudoku(grid, 0, 0);
+    if(!solvedSudoku){
+      return false;
+    }
+    let solvedString = this.convertToString(solvedSudoku);
+    return solvedString;
   }
 }
 
