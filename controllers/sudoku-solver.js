@@ -19,27 +19,77 @@ class SudokuSolver {
     return grid.flat().join("");
   }
 
-  nextEmptySpot(board){
-    for (let i=0; i<9; i++){
-      for (let j=0; j<9; j++){
-        if (board[i][j] === 0) {
-          return [i, j];
-        }
-      }
+  letterToNumber(row) {
+    switch (row.toUpperCase()) {
+      case "A":
+        return 1;
+      case "B":
+        return 2;
+      case "C":
+        return 3;
+      case "D":
+        return 4;
+      case "E":
+        return 5;
+      case "F":
+        return 6;
+      case "G":
+        return 7;
+      case "H":
+        return 8;
+      case "I":
+        return 9;
+      default:
+        return "none";
     }
-    return [-1, -1];
   }
 
   checkRowPlacement(puzzleString, row, col, val) {
-
+    let grid = this.convertToGrid(puzzleString)
+    row = this.letterToNumber(row);
+    if (grid[row-1][col -1] !== 0){
+      return false;
+    }
+    for (let j = 0; j < 9; j++){
+      if(grid[row-1][j] == val){
+        return false;
+      }
+    }
+    return true;
   }
 
   checkColPlacement(puzzleString, row, col, val) {
-
+    let grid = this.convertToGrid(puzzleString)
+    row = this.letterToNumber(row);
+    if (grid[row-1][col -1] !== 0){
+      return false;
+    }
+    for (let i = 0; i < 9; i++){
+      if(grid[i][col - 1] == val){
+        return false;
+      }
+    }
+    return true;
   }
 
   checkRegionPlacement(puzzleString, row, col, val) {
+    let grid = this.convertToGrid(puzzleString)
+    row = this.letterToNumber(row);
+    if (grid[row-1][col -1] !== 0){
+      return false;
+    }
 
+    let startRow = row - (row % 3);
+    let startCol = col - (col % 3);
+
+    for( let i=0; i < 3; i++){
+      for(let j=0; j < 3; j++){
+        if (grid[i + startRow][j + startCol] == val){
+          return false
+        }
+      }
+    }
+    return true;
   }
 
   solveSudoku(grid, row, col){
