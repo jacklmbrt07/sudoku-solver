@@ -26,7 +26,24 @@ module.exports = function (app) {
       if (/[^1-9.]/g.test(puzzle)){ 
         return res.json({error: 'Invalid characters in puzzle'})
       }
+
+      let validRow = solver.checkRowPlacement(puzzle, row, col, value)
+      let validCol = solver.checkColPlacement(puzzle, row, col, value) 
+      let validRegion = solver.checkRegionPlacement(puzzle, row, col, value);
+
+      let conflict = [];
+
+      if (validRow && validCol && validRegion){
+        res.json({ valid: true })
+      } else {
+        if (!validRow) conflicts.push("row");
+        if (!validCol) conflicts.push("column");
+        if (!validRegion) conflicts.push("region");
+        res.json({ valid: false, conflict })
+      }
+
     });
+
     
   app.route('/api/solve')
     .post((req, res) => {
