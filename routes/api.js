@@ -31,7 +31,7 @@ module.exports = function (app) {
       let validCol = solver.checkColPlacement(puzzle, row, col, value) 
       let validRegion = solver.checkRegionPlacement(puzzle, row, col, value);
 
-      let conflict = [];
+      let conflicts = [];
 
       if (validRow && validCol && validRegion){
         res.json({ valid: true })
@@ -39,7 +39,7 @@ module.exports = function (app) {
         if (!validRow) conflicts.push("row");
         if (!validCol) conflicts.push("column");
         if (!validRegion) conflicts.push("region");
-        res.json({ valid: false, conflict })
+        res.json({ valid: false, conflict: conflicts})
       }
 
     });
