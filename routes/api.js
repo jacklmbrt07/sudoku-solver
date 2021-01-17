@@ -17,7 +17,7 @@ module.exports = function (app) {
       if(coordinate.length != 2 || !/[a-i]/i.test(row) || !/[1-9]/i.test(col)) {
         return res.json({ error: "Invalid coordinate"})
       }
-      if(!/[1-9]/i.test(value)){
+      if(!/^(?:[1-9]|0[1-9])$/.test(value)){
         return res.json({ error: "Invalid value"})
       }
       if (puzzle.length != 81) { 
@@ -48,20 +48,24 @@ module.exports = function (app) {
   app.route('/api/solve')
     .post((req, res) => {
       // Test #2
-      let puzzle = req.body.puzzle;
+      const { puzzle } = req.body
       let regex = /[^1-9.]/g.test(puzzle)
-      let solution = solver.solve(puzzle)
       //Test 3
       if (!puzzle){
         return res.json({error: 'Required field missing'})
       // Test 4
-      } else if (regex){ 
+      } 
+      if (regex){ 
         return res.json({error: 'Invalid characters in puzzle'})
       // Test 5
-      } else if (puzzle.length != 81) { 
+      }  
+      if (puzzle.length != 81) { 
         return res.json({error: 'Expected puzzle to be 81 characters long'})
       // Test 6
-      } else if (!solution) {
+      } 
+      
+      let solution = solver.solve(puzzle)
+      if (!solution) {
         return res.json({ error: "Puzzle cannot be solved"})
       } else {
         return res.json({solution})
