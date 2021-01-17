@@ -8,19 +8,25 @@ let puzzleAns = "135762984946381257728459613694517832812936745357824196473298561
 
 
 suite('UnitTests', () => {
-  suite("Solver Tests", () => {
-    test("Logic handles a valid puzzle string of 81 characters", (done) => {
-      assert.equal(solver.solve(puzzleTest), puzzleAns);
-      done();
-    })
-
+  suite("puzzleString Tests", () => {
+    test("Logic handles a valid puzzle string of 81 characters", (done) => {})
     test("Logic handles a puzzle string with invalid characters (not 1-9 or .)", (done) => {})
-    
     test("Logic handles a puzzle string that is not 81 characters in length", (done) => {})
   })
 
-  suite("Checker Tests", () => {
-    
+  suite("Value Tests", () => {
+    test("Logic handles a valid row placement", (done) => {})
+    test("Logic handles a valid row placement", (done) => {})
+    test("Logic handles a valid row placement", (done) => {})
+    test("Logic handles a valid row placement", (done) => {})
+    test("Logic handles a valid row placement", (done) => {})
+    test("Logic handles a valid row placement", (done) => {})
+  })
+
+  suite("Solver Tests", () => {
+    test("Valid puzzle strings pass the solver", (done) => {})
+    test("Invalid puzzle strings fail the solver", (done) => {})
+    test("Solver returns the the expected solution for an incomplete puzzzle", (done) => {})
   })
 
 })
