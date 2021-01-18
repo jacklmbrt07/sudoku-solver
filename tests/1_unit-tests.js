@@ -67,5 +67,4 @@ suite('UnitTests', () => {
       done();
     })
   })
-
 })
