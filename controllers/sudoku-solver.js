@@ -47,6 +47,8 @@ class SudokuSolver {
   checkRowPlacement(puzzleString, row, col, val) {
     let grid = this.convertToGrid(puzzleString)
     row = this.letterToNumber(row);
+    // col = parseInt(col)
+    // val = parseInt(val)
     if (grid[row-1][col -1] !== 0){
       return false;
     }
@@ -141,6 +143,15 @@ class SudokuSolver {
 
 
   solve(puzzleString) {
+    let regex = /[^1-9.]/g.test(puzzleString)
+
+    if (regex){ 
+      return false
+    }  
+    if (puzzleString.length != 81) { 
+      return false
+    }
+
     let grid = this.convertToGrid(puzzleString);
     let solvedSudoku = this.solveSudoku(grid, 0, 0);
     if(!solvedSudoku){
